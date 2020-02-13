@@ -16,7 +16,7 @@ I use regular HTTP methods to get the data directly from Firebase on web. I'm st
 expand my knowledge of back-end systems, server side applications, relational databases, and server deployment.
 
 This will serve a dual purpose of allowing me to take as much load off of the web or mobile application as I can 
-to improve the user experience and to gain experience of modular development - improving portions of my system overtime.
+to improve the user experience and to gain experience of modular development - improving portions of my system over time.
 
 ## About this server
 

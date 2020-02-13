@@ -5,6 +5,9 @@ import 'kronos_server.dart';
 /// Override methods in this class to set up routes and initialize services like
 /// database connections. See http://aqueduct.io/docs/http/channel/.
 class KronosServerChannel extends ApplicationChannel {
+  //context used for database queries
+  ManagedContext context;
+
   /// Initialize services in this method.
   ///
   /// Implement this method to initialize services, read values from [options]
@@ -13,7 +16,21 @@ class KronosServerChannel extends ApplicationChannel {
   /// This method is invoked prior to [entryPoint] being accessed.
   @override
   Future prepare() async {
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+        //use config file to mask database values
+    final config = KronosConfiguration(options.configurationFilePath);
+
+    final ManagedDataModel model = ManagedDataModel.fromCurrentMirrorSystem();
+    final PostgreSQLPersistentStore database = PostgreSQLPersistentStore(
+      config.database.username,
+      config.database.password,
+      config.database.host,
+      config.database.port,
+      config.database.databaseName,
+    );
+
+    context = ManagedContext(model, database);
   }
 
   /// Construct the request channel.
@@ -28,12 +45,16 @@ class KronosServerChannel extends ApplicationChannel {
 
     // Prefer to use `link` instead of `linkFunction`.
     // See: https://aqueduct.io/docs/http/request_controller/
-    router
-      .route("/example")
-      .linkFunction((request) async {
-        return Response.ok({"key": "value"});
-      });
+    router.route("/example").linkFunction((request) async {
+      return Response.ok({"key": "value"});
+    });
 
     return router;
   }
+}
+
+class KronosConfiguration extends Configuration {
+  KronosConfiguration(String configPath) : super.fromFile(File(configPath));
+
+  DatabaseConfiguration database;
 }
