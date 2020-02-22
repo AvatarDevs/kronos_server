@@ -15,8 +15,10 @@ expand my knowledge of back-end systems, server side applications, relational da
 
 This will serve a dual purpose of allowing me to take as much load off of the web or mobile application as I can to improve the user experience and to gain experience of modular development - improving portions of my system over time.
 
-## About this server
+One of my goals with this is to make it eventually be the middle man between Firebase and the Mobile or Web application to handle various tasks with manipulating/updating data - most notably auto-translating guides from english to a chosen langague through google translate API or even a profanity filter for user posts in a party-up feature. One of my biggest concerns is that would likely mean switching the mobile app from using the Firebase SDK and losing a lot of it's built in features; most importantly offline caching and efficient reading from the database. Using this server could mean i end up with higher read usage on Firebase - increasing my bill. I've yet to explore in detail what a proper long term efficient solution would be. 
 
-This server is written in Dart using Aqueduct - an HTTP server framework. Postgresql is used for the database, but that could change over time if I experiment with alternatives. 
+## About this servers tech
+
+This server is written in Dart using Aqueduct - an HTTP server framework. Postgresql is planned to be used for the database, but that could change over time if I experiment with alternatives. 
 
 See the documentation for [Aqueduct](https://aqueduct.io/).
